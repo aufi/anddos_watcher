@@ -11,30 +11,29 @@ $(document).ready(function(){
 	
 	
 	var values = [], labels = [];
-	$("table.global_state th").each(function () {
+	$("table.global_state th:not(:first)").each(function () {
 	    labels.push($(this).text());
 	});
-	$("table.global_state td").each(function () {
+	$("table.global_state td:not(:first)").each(function () {
 	    values.push(parseInt($(this).text(), 10));
 	});
-	Raphael("chart_overview", 450, 450).pieChart(200, 200, 150, values, labels, "#fff");
+	Raphael("chart_overview", 450, 450).pieChart(200, 220, 150, values, labels, "#fff");
 	
 	
 	/* refacctor table alg */
 	$('table.clients_state tr:not(:first)').each(function(){
 		values = [], labels = [];
-		$("th", $(this).parent()[0]).each(function () {
+		$("th.data", $(this).parent()[0]).each(function () {
 		    labels.push($(this).text());
 		});
-		$("td:not(:last):not(:first)", this).each(function () {
+		$("td.data", this).each(function () {
 		    values.push(parseInt($(this).text(), 10));
 		});
-		console.log(values);
-		console.log(labels);
-		Raphael($('div.chart_client', this)[0], 50, 50).pieChart(20, 20, 15, values, labels, "#fff");
+		Raphael($('.chart_client', this)[0], 50, 50).pieChart(20, 20, 15, values, labels, "#fff");
+		Raphael($('.chart_client', this)[0], 50, 50).pieChart(20, 20, 15, values, labels, "#fff");
 	});
 	
-	
+	$('.loaded').delay(2000).fadeOut('slow');
 });
 
 Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
