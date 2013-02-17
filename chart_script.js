@@ -1,18 +1,40 @@
 $(document).ready(function(){
 	
 	// Creates canvas 320 × 200 at 10, 50
-	var paper = Raphael(10, 50, 320, 200);
-
+	var paper = Raphael('status_title', 20, 20);
 	// Creates circle at x = 50, y = 40, with radius 10
-	var circle = paper.circle(50, 40, 10);
+	var circle = paper.circle(10, 12, 8);
 	// Sets the fill attribute of the circle to red (#f00)
-	circle.attr("fill", "#f00");
-
+	circle.attr("fill", "yellow");
 	// Sets the stroke attribute of the circle to white
 	circle.attr("stroke", "#fff");
 	
 	
-	Raphael("holder", 700, 700).pieChart(350, 350, 200, [10,13,18,2], ['asd','sdd','asdds','xcv'], "#fff");
+	var values = [], labels = [];
+	$("table.global_state th").each(function () {
+	    labels.push($(this).text());
+	});
+	$("table.global_state td").each(function () {
+	    values.push(parseInt($(this).text(), 10));
+	});
+	Raphael("chart_overview", 450, 450).pieChart(200, 200, 150, values, labels, "#fff");
+	
+	
+	/* refacctor table alg */
+	$('table.clients_state tr:not(:first)').each(function(){
+		values = [], labels = [];
+		$("th", $(this).parent()[0]).each(function () {
+		    labels.push($(this).text());
+		});
+		$("td:not(:last):not(:first)", this).each(function () {
+		    values.push(parseInt($(this).text(), 10));
+		});
+		console.log(values);
+		console.log(labels);
+		Raphael($('div.chart_client', this)[0], 50, 50).pieChart(20, 20, 15, values, labels, "#fff");
+	});
+	
+	
 });
 
 Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
