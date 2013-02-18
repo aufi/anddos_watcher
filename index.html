@@ -3,12 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<title>ANDDOS - status watcher</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="raphael-min.js"></script>
+	<script src="libs/jquery.min.js"></script>
+	<script src="libs/raphael-min.js"></script>
 	<script src="chart_script.js"></script>
 	<style>
 	body {
 		padding-left: 20px;
+	}
+	tr:nth-child(even) {
+		background: #eee
+	}
+	tr:hover {
+		background-color: #ddd;
+	}
+	td {
+		padding-left: 5px;
 	}
 	</style>
 </head>
@@ -21,17 +30,35 @@
 	<table class="global_state">
 		<tr>
 			<th>Clients count</th>
-			<th>request count</th>
-			<th>notmod count</th>
+			<th class="data">request count</th>
+			<th class="data">notmod count</th>
+			<th class="httpcode">HTTP1xx</th>
+			<th class="httpcode">HTTP2xx</th>
+			<th class="httpcode">HTTP3xx</th>
+			<th class="httpcode">HTTP4xx</th>
+			<th class="httpcode">HTTP5xx</th>
+			<th class="mimetype">HTML</th>
+			<th class="mimetype">CSS</th>
+			<th class="mimetype">IMAGE</th>
+			<th class="mimetype">OTHER</th>
 		</tr>
 		<tr>
 			<td>4</td>
-			<td>560</td>
-			<td>383</td>
+			<td class="data">560</td>
+			<td class="data">383</td>
+			<td class="httpcode">83</td>
+			<td class="httpcode">38</td>
+			<td class="httpcode">33</td>
+			<td class="httpcode">33</td>
+			<td class="httpcode">83</td>
+			<td class="mimetype">3</td>
+			<td class="mimetype">38</td>
+			<td class="mimetype">83</td>
+			<td class="mimetype">33</td>
 		</tr>
 	</table>
 
-	<div id="chart_overview"></div>
+	<div class="chart_overview"></div>
 	
 
 	<h3>Clients state</h3>
@@ -41,6 +68,15 @@
 			<th>ID</th>
 			<th class="data">request count</th>
 			<th class="data">notmod count</th>
+			<th class="httpcode">HTTP1xx</th>
+			<th class="httpcode">HTTP2xx</th>
+			<th class="httpcode">HTTP3xx</th>
+			<th class="httpcode">HTTP4xx</th>
+			<th class="httpcode">HTTP5xx</th>
+			<th class="mimetype">HTML</th>
+			<th class="mimetype">CSS</th>
+			<th class="mimetype">IMAGE</th>
+			<th class="mimetype">OTHER</th>
 			<th>pass seq</th>
 			<th>charts</th>
 		</tr>
@@ -48,32 +84,99 @@
 			<td>4432</td>
 			<td class="data">160</td>
 			<td class="data">83</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">2</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">3</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
 			<td>m"ncDzkjvd/uF"ge</td>
 			<td class="chart_client"></td>
 		</tr>
 		<tr>
-			<td>4532</td>
-			<td class="data">16</td>
-			<td class="data">8</td>
-			<td>mDzkjvdge</td>
+			<td>4432</td>
+			<td class="data">160</td>
+			<td class="data">83</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">2</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">3</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td>m"ncDzkjvd/uF"ge</td>
 			<td class="chart_client"></td>
 		</tr>
 		<tr>
-			<td>6932</td>
-			<td class="data">240</td>
-			<td class="data">183</td>
-			<td>VMJFsDzkjdfe</td>
+			<td>4432</td>
+			<td class="data">160</td>
+			<td class="data">83</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">2</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">3</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td>m"ncDzkjvd/uF"ge</td>
 			<td class="chart_client"></td>
 		</tr>
 		<tr>
-			<td>9492</td>
-			<td class="data">10</td>
-			<td class="data">2</td>
-			<td>cDzkdfjvd/uF"ge</td>
+			<td>4432</td>
+			<td class="data">160</td>
+			<td class="data">83</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">2</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">3</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td>m"ncDzkjvd/uF"ge</td>
+			<td class="chart_client"></td>
+		</tr>
+		<tr>
+			<td>4432</td>
+			<td class="data">160</td>
+			<td class="data">83</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">2</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">3</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td>m"ncDzkjvd/uF"ge</td>
+			<td class="chart_client"></td>
+		</tr>
+		<tr>
+			<td>4432</td>
+			<td class="data">160</td>
+			<td class="data">83</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">2</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">8</td>
+			<td class="httpcode">3</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td class="mimetype">8</td>
+			<td>m"ncDzkjvd/uF"ge</td>
 			<td class="chart_client"></td>
 		</tr>
 	</table>
-	
 	
 	
 </body>

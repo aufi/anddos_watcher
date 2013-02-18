@@ -1,41 +1,45 @@
 $(document).ready(function(){
 	
-	// Creates canvas 320 × 200 at 10, 50
+	// status light
 	var paper = Raphael('status_title', 20, 20);
-	// Creates circle at x = 50, y = 40, with radius 10
 	var circle = paper.circle(10, 12, 8);
-	// Sets the fill attribute of the circle to red (#f00)
 	circle.attr("fill", "yellow");
-	// Sets the stroke attribute of the circle to white
 	circle.attr("stroke", "#fff");
-	
-	
+
+	// pie charts
+	var chart_data = ['mimetype', 'httpcode', 'data'];
 	var values = [], labels = [];
-	$("table.global_state th:not(:first)").each(function () {
-	    labels.push($(this).text());
-	});
-	$("table.global_state td:not(:first)").each(function () {
-	    values.push(parseInt($(this).text(), 10));
-	});
-	Raphael("chart_overview", 450, 450).pieChart(200, 220, 150, values, labels, "#fff");
-	
-	
-	/* refacctor table alg */
-	$('table.clients_state tr:not(:first)').each(function(){
+
+	$.each(chart_data, function(index, name) {
 		values = [], labels = [];
-		$("th.data", $(this).parent()[0]).each(function () {
+		$("table.global_state th."+name).each(function () {
 		    labels.push($(this).text());
 		});
-		$("td.data", this).each(function () {
+		$("table.global_state td."+name).each(function () {
 		    values.push(parseInt($(this).text(), 10));
 		});
-		Raphael($('.chart_client', this)[0], 50, 50).pieChart(20, 20, 15, values, labels, "#fff");
-		Raphael($('.chart_client', this)[0], 50, 50).pieChart(20, 20, 15, values, labels, "#fff");
+		Raphael($('.chart_overview')[0], 340, 300).pieChart(160, 160, 80, values, labels, "#fff");
 	});
 	
+	$('table.clients_state tr:not(:first)').each(function(){
+		var cell = this;
+		$.each(chart_data, function(index, name) {
+			values = [], labels = [];
+			$("th."+name, $(cell).parent()[0]).each(function () {
+			    labels.push($(this).text());
+			});
+			$("td."+name, cell).each(function () {
+			    values.push(parseInt($(this).text(), 10));
+			});
+			Raphael($('.chart_client', cell)[0], 45, 45).pieChart(20, 20, 15, values, labels, "#fff");
+		});
+	});
+	
+	// load info
 	$('.loaded').delay(2000).fadeOut('slow');
 });
 
+// charts from http://raphaeljs.com/pie.html
 Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
     var paper = this,
         rad = Math.PI / 180,
